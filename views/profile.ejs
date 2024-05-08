@@ -16,9 +16,22 @@
           >Logout</a
         >
       </div>
-      <h3 class="text-3xl mb-5">
-        Welcome, <%=user.name%> to your profile page
-      </h3>
+      <div class="flex items-start gap-3">
+        <div class="w-14 h-14 mb-2  rounded-full overflow-hidden">
+          <a href="./profile/upload">
+
+            <img
+            
+              class="w-full h-full object-cover"
+              src="/images/uploads/<%= user.profilepic%>"
+              alt="logo"
+            />
+          </a>
+        </div>
+        <h3 class="text-3xl mb-5">
+          Welcome, <%=user.name%> to your profile page
+        </h3>
+      </div>
       <h4 class="mb-5">Create your new post here</h4>
       <form method="post" action="/post">
         <textarea
@@ -41,12 +54,14 @@
           >
             <h4 class="text-blue-500 mb-2">@<%= user.username%></h4>
             <p class="text-sm tracking-tight"><%=post.content%></p>
-            <small class="inline block mt-4 mb-2"><%=post.likes.length%> likes</small>
+            <small class="inline block mt-4 mb-2"
+              ><%=post.likes.length%> likes</small
+            >
             <div class="btns flex gap-4 mt-2">
               <a class="text-blue-500" href="/like/<%= post._id %>">
                 <%= post.likes.indexOf(user._id)=== -1 ? "Like" :"Unlike" %>
               </a>
-              
+
               <a class="text-zinc-500" href="/edit/<%= post._id %>">Edit</a>
               <a class="text-red-500" href="/delete/<%= post._id%>">Delete</a>
             </div>
