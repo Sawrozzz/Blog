@@ -23,6 +23,30 @@ app.get("/profile/upload", (req, res) => {
   res.render("upload");
 });
 
+
+app.get("/delete/:id", isLoggedIn, async (req, res) => {
+ let post= await postModel.findOne({_id:req.params.id}).populate("user")
+  res.render("delete", {post});
+});
+app.post("/deletePost/:id", isLoggedIn, async (req, res) => {
+  let post = await postModel.findOneAndDelete(
+    { _id: req.params.id },
+    { content: req.body.content }
+  );
+  res.redirect("/profile");
+});
+app.get("/edit/:id", isLoggedIn, async (req, res) => {
+  let post = await postModel.findOne({ _id: req.params.id }).populate("user");
+  res.render("edit", { post });
+});
+app.post("/update/:id", isLoggedIn, async (req, res) => {
+  let post = await postModel.findOneAndUpdate(
+    { _id: req.params.id },
+    { content: req.body.content }
+  );
+  res.redirect("/profile");
+});
+
 app.post("/upload", isLoggedIn, upload.single("image"), async (req, res) => {
   let user = await userModel.findOne({ email: req.user.email });
   user.profilepic = req.file.filename;
@@ -55,22 +79,7 @@ app.get("/like/:id", isLoggedIn, async (req, res) => {
   res.redirect("/profile");
 });
 
-app.get("/edit/:id", isLoggedIn, async (req, res) => {
-  let post = await postModel.findOne({ _id: req.params.id }).populate("user");
-  res.render("edit", { post });
-});
 
-app.post("/update/:id", isLoggedIn, async (req, res) => {
-  let post = await postModel.findOneAndUpdate(
-    { _id: req.params.id },
-    { content: req.body.content }
-  );
-  res.redirect("/profile");
-});
-app.post("/delete/:id", isLoggedIn, async (req, res) => {
-  let post = await postModel.findOneAndDelete({ content: req.body.content });
-  res.redirect("/profile");
-});
 
 app.post("/post", isLoggedIn, async (req, res) => {
   let user = await userModel.findOne({ email: req.user.email });

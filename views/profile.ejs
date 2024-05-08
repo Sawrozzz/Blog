@@ -9,25 +9,26 @@
   </head>
   <body>
     <div class="w-full min-h-screen bg-zinc-900 text-black text-white p-10">
-      <div class="w-full flex justify-end">
-        <a
-          class="bg-red-500 rounded-md px-3 py-2 inline-block mb-5"
-          href="/logout"
-          >Logout</a
-        >
-      </div>
-      <div class="flex items-start gap-3">
-        <div class="w-14 h-14 mb-2  rounded-full overflow-hidden">
+      <div class="w-full flex justify-between">
+        <div class="w-24 h-24 mb-2 rounded-full overflow-hidden">
           <a href="./profile/upload">
-
             <img
-            
               class="w-full h-full object-cover"
               src="/images/uploads/<%= user.profilepic%>"
               alt="logo"
             />
           </a>
         </div>
+        <div>
+          <a
+            class="bg-red-500 rounded-md px-3 py-2 inline-block mb-5"
+            href="/logout"
+            >Logout</a
+          >
+        </div>
+      </div>
+
+      <div class="flex items-start gap-3">
         <h3 class="text-3xl mb-5">
           Welcome, <%=user.name%> to your profile page
         </h3>
