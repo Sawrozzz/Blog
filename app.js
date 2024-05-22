@@ -17,16 +17,19 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(cookieParser());
 
 app.get("/", (req, res) => {
+  res.render("home");
+});
+app.get("/register", (req, res) => {
   res.render("index");
 });
+
 app.get("/profile/upload", (req, res) => {
   res.render("upload");
 });
 
-
 app.get("/delete/:id", isLoggedIn, async (req, res) => {
- let post= await postModel.findOne({_id:req.params.id}).populate("user")
-  res.render("delete", {post});
+  let post = await postModel.findOne({ _id: req.params.id }).populate("user");
+  res.render("delete", { post });
 });
 app.post("/deletePost/:id", isLoggedIn, async (req, res) => {
   let post = await postModel.findOneAndDelete(
@@ -78,8 +81,6 @@ app.get("/like/:id", isLoggedIn, async (req, res) => {
   await post.save();
   res.redirect("/profile");
 });
-
-
 
 app.post("/post", isLoggedIn, async (req, res) => {
   let user = await userModel.findOne({ email: req.user.email });
