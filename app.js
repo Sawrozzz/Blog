@@ -17,11 +17,9 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(cookieParser());
 
 app.get("/", (req, res) => {
-  res.render("home");
-});
-app.get("/register", (req, res) => {
   res.render("index");
 });
+
 
 app.get("/profile/upload", (req, res) => {
   res.render("upload");
