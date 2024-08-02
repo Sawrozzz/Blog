@@ -5,9 +5,7 @@ const postModel = require("./models/post");
 const cookieParser = require("cookie-parser");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const user = require("./models/user");
 const path = require("path");
-const crypto = require("crypto");
 const upload = require("./utils/multer");
 require("dotenv").config();
 
@@ -17,6 +15,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(cookieParser());
 const jwtsecrect = process.env.JWT_SECRET;
+let uploadFiles = {};
 
 app.get("/home", (req, res) => {
   res.send("This is home page");
@@ -56,8 +55,9 @@ app.post("/update/:id", isLoggedIn, async (req, res) => {
 
 app.post("/upload", isLoggedIn, upload.single("image"), async (req, res) => {
   let user = await userModel.findOne({ email: req.user.email });
-  user.profilepic = req.file.filename;
+  user.profilepic = req.file.buffer.toString("base64");
   await user.save();
+  uploadFiles[user.email] =req.file.buffer;
   res.redirect("/profile");
 });
 app.get("/profile", isLoggedIn, async (req, res) => {
