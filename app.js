@@ -9,12 +9,14 @@ const user = require("./models/user");
 const path = require("path");
 const crypto = require("crypto");
 const upload = require("./utils/multer");
+require("dotenv").config();
 
 app.set("view engine", "ejs");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(cookieParser());
+const jwtsecrect = process.env.JWT_SECRET;
 
 app.get("/home", (req, res) => {
   res.send("This is home page");
@@ -120,11 +122,10 @@ app.post("/register", async (req, res) => {
           email: email,
           userid: user._id,
         },
-        "shhhh"
+        jwtsecrect
       );
       res.cookie("token", token);
       res.redirect("/login");
-      // res.send("Registerd");
     });
   });
 });
@@ -137,7 +138,7 @@ app.post("/login", async (req, res) => {
 
   bcrypt.compare(password, user.password, function (err, result) {
     if (result) {
-      let token = jwt.sign({ email: email, userid: user._id }, "shhhh");
+      let token = jwt.sign({ email: email, userid: user._id }, jwtsecrect);
       res.cookie("token", token);
       res.status(200);
       res.redirect("/profile");
@@ -156,7 +157,7 @@ function isLoggedIn(req, res, next) {
     res.redirect("/login");
   }
   try {
-    let data = jwt.verify(req.cookies.token, "shhhh");
+    let data = jwt.verify(req.cookies.token, jwtsecrect);
     req.user = data;
     next();
   } catch (error) {
