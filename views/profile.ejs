@@ -13,9 +13,10 @@
         <div class="w-24 h-24 mb-2 rounded-full overflow-hidden">
           <a href="./profile/upload">
             <img
-              class="w-full h-full object-cover"
-              src="/images/uploads/<%= user.profilepic%>"
-              alt="logo"
+              class="w-full h-full object-cover "
+                src="<%= user.profilepic ? 'data:image/jpeg;base64,' + user.profilepic : './images/images.jpg' %> "
+              alt="<%=user.profilepic%>"
+              title=" Click to Change Profile"
             />
           </a>
         </div>
