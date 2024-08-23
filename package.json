@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
-    "build": "npm rebuild bcrypt && npm install",
     "start": "node app.js"
   },
   "keywords": [],
