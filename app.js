@@ -25,7 +25,6 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
-
 app.get("/profile/upload", (req, res) => {
   res.render("upload");
 });
@@ -57,7 +56,7 @@ app.post("/upload", isLoggedIn, upload.single("image"), async (req, res) => {
   let user = await userModel.findOne({ email: req.user.email });
   user.profilepic = req.file.buffer.toString("base64");
   await user.save();
-  uploadFiles[user.email] =req.file.buffer;
+  uploadFiles[user.email] = req.file.buffer;
   res.redirect("/profile");
 });
 app.get("/profile", isLoggedIn, async (req, res) => {
