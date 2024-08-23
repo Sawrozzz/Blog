@@ -4,11 +4,11 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>BlogApp</title>
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body>
-    <div class="w-full min-h-screen bg-zinc-900 text-black text-white p-10">
+    <div class="w-full min-h-screen bg-slate-950  text-white p-8">
       <div class="w-full flex justify-end">
         <a
           class="bg-red-500 rounded-md px-3 py-2 inline-block mb-5"
@@ -17,16 +17,14 @@
         >
       </div>
     
-      <h4 class="mb-5">Edit your post </h4>
+      <h4 class="mb-5">Edit your post Here... </h4>
       <form method="post" action="/update/<%= post._id%>">
-        <textarea
+        <input
           placeholder="whats on your mind"
-          class="p-3 outline-none w-1/3 resize-none bg-transparent border-2 border-zinc-800 rounded-md"
+              class="p-3 outline-none h-24 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 resize-none bg-transparent border-2 border-zinc-800 rounded-md"
           name="content"
-        >
-       
-        <%= post.content%>
-   </textarea>
+          value="<%= post.content%>"
+   />
      <input
           class="px-3 py-2 bg-green-500 block rounded-md mt-2 w-40 cursor-pointer"
           type="submit"
